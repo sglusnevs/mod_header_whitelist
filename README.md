@@ -1,6 +1,7 @@
 
 This is a very simple Apache 2 module to control exaclty what client-side headers will
-be passed over to your server-side applications.
+be passed over to your server-side applications to reduce possible attack surface and
+provide security-in-depth.
 
 ### Compiling (RHEL)
 
