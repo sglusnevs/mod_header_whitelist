@@ -43,9 +43,15 @@ HeadersClientWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
 
 #### HeadersClientSensitive
 
-Space-separated list of client headers whose values should not be logged into server's logfiles.
+It is possible for debugging purposes to log out every HTTP header, it's value and decision
+to allow/strip it out. However, some headers might contain sensitive information that should
+be better not logged. For this purpose, one can define list of sensitive headers whose values
+will never be saved into log files.
 
-Can be set in global or in virtual host context.
+This parameter defines a space-separated list of client headers whose values should not be 
+logged into server's logfiles.
+
+The parameter can be set in global or in virtual host context.
 
 Example: 
 ```
