@@ -84,14 +84,14 @@ It works!
 From Linux CLI:
 
 ```
-$ curl -v http://192.168.56.122/ -H "X-Test: bad" -H "User-Agent: myagent" -H "Authorization: secret"
+$ curl -v http://192.168.56.100/ -H "X-Test: bad" -H "User-Agent: myagent" -H "Authorization: secret"
 
 $ sudo tail -f /var/log/httpd/iptest_error.log
 ```
 
 Logs:
 ```
-[:debug] ... [client XXXX ] whitelist: allowed header: Host: 192.168.56.122
+[:debug] ... [client XXXX ] whitelist: allowed header: Host: 192.168.56.100
 [:debug] ... [client XXXX ] whitelist: allowed header: Accept: */*
 [:debug] ... [client XXXX ] whitelist: stripped header: X-Test: bad
 [:debug] ... [client XXXX ] whitelist: allowed header: User-Agent: myagent
@@ -117,7 +117,7 @@ foreach($headers as $key=>$val){
 ```
 
 In browser:
-URL -> http://192.168.56.100/
+URL -> http://192.168.56.100/index.php
 
 ```text
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
