@@ -5,27 +5,38 @@ be passed over to your server-side applications.
 ### Compiling (RHEL)
 
 ```
-dnf install httpd httpd-devel apr apr-util redhat-rpm-config
-make
+$ sudo dnf install httpd httpd-devel apr apr-util redhat-rpm-config
+$ make
 ```
 
 
 ### Installing
 
-Makefile provided automatically adds module to your httpd.conf, but you might need
-to change the HeaderWhitelist configuration parameter to match your needs.
+Makefile provided automatically adds module to your httpd.conf
 
 ```
 sudo make install
-systemctl restart httpd
+sudo systemctl restart httpd
 ```
 
-Virtual host definition (192.168.56.100 is the host-only network for my VMs)
+It will create httpd.conf record and activate it:
+
+```
+LoadModule header_whitelist_module /usr/lib64/httpd/modules/mod_header_whitelist.so
+```
+
+But you need to add the HeaderWhitelist configuration parameter to httpd.conf to match
+your needs:
 
 ```
 # Allow only these headers to pass through
 HeaderWhitelist Host User-Agent Accept
+```
 
+Virtual host definition I used for testing (assuming 192.168.56.100 is the host-only network 
+for your VMs)
+
+```
 # IP-based virtual host for tests (no ServerName needed)
 <VirtualHost 192.168.56.100:80>
     DocumentRoot "/var/www/html/iptest"
@@ -36,22 +47,29 @@ HeaderWhitelist Host User-Agent Accept
 </VirtualHost>
 ```
 
+The /var/www/html/iptest directory micht contain simple index.html file:
+
+```
+$ cat /var/www/html/iptest/index.html
+It works!
+```
+
 ### Testing
 
 From Linux CLI:
 
 ```
-curl -v http://192.168.56.122/ -H "X-Test: bad" -H "User-Agent: myagent"
+$ curl -v http://192.168.56.122/ -H "X-Test: bad" -H "User-Agent: myagent"
 
-tail -f /var/log/httpd/iptest_error.log
+$ sudo tail -f /var/log/httpd/iptest_error.log
 ```
 
-To make sure headers are really stripped off, I used php to show actual headers:
+To make sure headers are really stripped off, I use php to show actual headers:
 
 
 ```
-dnf install php
-systemctl restart httpd
+$ sudo dnf install php
+$ suso systemctl restart httpd
 ```
 
 ```
@@ -63,7 +81,6 @@ foreach($headers as $key=>$val){
   echo $key . ': ' . $val . '<br>';
 }
 ```
-
 
 In browser:
 URL -> http://192.168.56.100/
