@@ -1,7 +1,7 @@
 
 This is a very simple Apache 2 module to control exaclty what client-side headers will
 be passed over to your server-side applications to reduce possible attack surface and
-provide security-in-depth.
+supporting security-in-depth.
 
 ### Compiling (RHEL)
 
@@ -13,11 +13,10 @@ $ make
 
 ### Installing
 
-Makefile provided automatically adds module to your httpd.conf
+The makefile provided adds module to your httpd.conf automatically:
 
 ```
 sudo make install
-sudo systemctl restart httpd
 ```
 
 It will create httpd.conf record and activate it:
@@ -26,9 +25,15 @@ It will create httpd.conf record and activate it:
 LoadModule header_whitelist_module /usr/lib64/httpd/modules/mod_header_whitelist.so
 ```
 
+To activate module, restart apache httpd:
+
+```
+sudo systemctl restart httpd
+```
+
 ### Configuration 
 
-This module supports these parameters:
+This module supports the following parameters.
 
 #### HeadersClientWhitelist
 
