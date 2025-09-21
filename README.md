@@ -78,7 +78,7 @@ It works!
 From Linux CLI:
 
 ```
-$ curl -v http://192.168.56.122/ -H "X-Test: bad" -H "User-Agent: myagent"
+$ curl -v http://192.168.56.122/ -H "X-Test: bad" -H "User-Agent: myagent" -H "Authorization: secret"
 
 $ sudo tail -f /var/log/httpd/iptest_error.log
 ```
