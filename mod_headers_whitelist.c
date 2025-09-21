@@ -6,7 +6,7 @@
 #include "apr_strings.h"
 
 /* Forward declaration of module */
-module AP_MODULE_DECLARE_DATA header_whitelist_module;
+module AP_MODULE_DECLARE_DATA headers_whitelist_module;
 
 /* Module configuration per server/vhost */
 typedef struct {
@@ -25,7 +25,7 @@ static void *create_whitelist_server_config(apr_pool_t *p, server_rec *s) {
 /* Directive handler: HeaderWhitelist */
 static const char *set_whitelist(cmd_parms *cmd, void *dummy, const char *arg) {
     whitelist_cfg *cfg = ap_get_module_config(cmd->server->module_config,
-                                              &header_whitelist_module);
+                                              &headers_whitelist_module);
     const char **new = (const char **)apr_array_push(cfg->whitelist);
     *new = apr_pstrdup(cmd->pool, arg);
     return NULL;
@@ -34,7 +34,7 @@ static const char *set_whitelist(cmd_parms *cmd, void *dummy, const char *arg) {
 /* Directive handler: SensitiveHeaders */
 static const char *set_sensitive(cmd_parms *cmd, void *dummy, const char *arg) {
     whitelist_cfg *cfg = ap_get_module_config(cmd->server->module_config,
-                                              &header_whitelist_module);
+                                              &headers_whitelist_module);
     const char **new = (const char **)apr_array_push(cfg->sensitive);
     *new = apr_pstrdup(cmd->pool, arg);
     return NULL;
@@ -73,7 +73,7 @@ static int whitelist_fixups(request_rec *r) {
     if (r->main) return DECLINED;
 
     whitelist_cfg *cfg = ap_get_module_config(r->server->module_config,
-                                              &header_whitelist_module);
+                                              &headers_whitelist_module);
 
     if (!cfg || !cfg->whitelist || cfg->whitelist->nelts == 0) {
         return DECLINED;
@@ -117,7 +117,7 @@ static void register_hooks(apr_pool_t *p) {
 }
 
 /* Module declaration */
-module AP_MODULE_DECLARE_DATA header_whitelist_module = {
+module AP_MODULE_DECLARE_DATA headers_whitelist_module = {
     STANDARD20_MODULE_STUFF,
     NULL,                       /* per-dir config */
     NULL,                       /* merge per-dir config */

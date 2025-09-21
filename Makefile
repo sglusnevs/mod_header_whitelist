@@ -1,6 +1,6 @@
 APXS = apxs
-SRC  = mod_header_whitelist.c
-NAME = mod_header_whitelist.so
+SRC  = mod_headers_whitelist.c
+NAME = mod_headers_whitelist.so
 
 
 all: $(NAME)
@@ -16,9 +16,9 @@ install: $(NAME)
 test:
 	@echo "Checking Apache loaded modules..."
 	@if command -v httpd >/dev/null 2>&1; then \
-	    httpd -M | grep header_whitelist || true; \
+	    httpd -M | grep headers_whitelist || true; \
 	elif command -v apache2 >/dev/null 2>&1; then \
-	    apache2 -M | grep header_whitelist || true; \
+	    apache2 -M | grep headers_whitelist || true; \
 	else \
 	    echo "Neither httpd nor apache2 found"; \
 	    exit 1; \

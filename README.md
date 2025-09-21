@@ -22,7 +22,7 @@ sudo make install
 It will create httpd.conf record and activate it:
 
 ```
-LoadModule header_whitelist_module /usr/lib64/httpd/modules/mod_header_whitelist.so
+LoadModule headers_whitelist_module /usr/lib64/httpd/modules/mod_headers_whitelist.so
 ```
 
 To activate module, restart apache httpd:
@@ -50,11 +50,10 @@ HeadersClientWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
 
 It is possible for debugging purposes to log out every HTTP header, it's value and decision
 to allow/strip it out. However, some headers might contain sensitive information that should
-be better not logged. For this purpose, one can define list of sensitive headers whose values
-will never be saved into log files.
+better not to be logged. 
 
-This parameter defines a space-separated list of client headers whose values should not be 
-logged into server's logfiles.
+With this parameter one can define list of of space-separated sensitive headers whose values 
+will never be logged into log files (case-insensitive).
 
 The parameter can be set in global or in virtual host context.
 
@@ -79,7 +78,7 @@ HeadersClientSensitive Cookie Set-Cookie Authorization
     ErrorLog "/var/log/httpd/iptest_error.log"
     CustomLog "/var/log/httpd/iptest_access.log" combined
     # Increase verbosity to see debug logging in error log
-    LogLevel header_whitelist_module:debug
+    LogLevel headers_whitelist_module:debug
 </VirtualHost>
 ```
 
@@ -137,5 +136,5 @@ Authorization: secret
 
 ### Debugging
 
-To log each request headers, as well add decision about it, use "LogLevel header_whitelist_module:debug" 
+To log each request headers, as well add decision about it, use "LogLevel headers_whitelist_module:debug" 
 parameter. Use "HeadersClientSensitive" parameter to prevent sensitive header values to be logged.
