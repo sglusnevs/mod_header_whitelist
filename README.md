@@ -25,18 +25,37 @@ It will create httpd.conf record and activate it:
 LoadModule header_whitelist_module /usr/lib64/httpd/modules/mod_header_whitelist.so
 ```
 
-But you need to add the HeaderWhitelist configuration parameter to httpd.conf to match
-your needs:
+### Configuration 
 
-```
-# Allow only these headers to pass through
-HeaderWhitelist Host User-Agent Accept
-```
+This module supports these parameters:
+
+#### HeaderWhitelist
+
+Space-separated list of Headers that are whitelisted (case-insensitive)
+
+Example:
+
+HeaderWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
+
+#### SensitiveHeaders
+
+Space-separated list of Headers whose values should not be logged into server's logfiles.
+
+Example: 
+
+SensitiveHeaders Cookie Set-Cookie Authorization
+
+
+### Testing
 
 Virtual host definition I used for testing (assuming 192.168.56.100 is the host-only network 
-for your VMs)
+for your VMs).
 
-```
+```httpd.conf
+HeaderWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
+
+SensitiveHeaders Cookie Set-Cookie Authorization
+
 # IP-based virtual host for tests (no ServerName needed)
 <VirtualHost 192.168.56.100:80>
     DocumentRoot "/var/www/html/iptest"
@@ -62,6 +81,15 @@ From Linux CLI:
 $ curl -v http://192.168.56.122/ -H "X-Test: bad" -H "User-Agent: myagent"
 
 $ sudo tail -f /var/log/httpd/iptest_error.log
+```
+
+Logs:
+```
+[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(100): [client XXXX ] whitelist: allowed header: Host: 192.168.56.122
+[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(100): [client XXXX ] whitelist: allowed header: Accept: */*
+[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(104): [client XXXX ] whitelist: stripped header: X-Test: bad
+[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(100): [client XXXX ] whitelist: allowed header: User-Agent: myagent
+[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(100): [client XXXX ] whitelist: allowed header: Authorization: <hidden>
 ```
 
 To make sure headers are really stripped off, I use php to show actual headers:

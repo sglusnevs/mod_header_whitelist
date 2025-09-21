@@ -1,11 +1,17 @@
 APXS = apxs
 SRC  = mod_header_whitelist.c
+NAME = mod_header_whitelist.so
 
-all:
+
+all: $(NAME)
 	$(APXS) -c $(SRC)
 
-install:
-	$(APXS) -i -a $(SRC)
+$(NAME): $(SRC)
+	$(APXS) -c $(SRC)
+	@if [ -f .libs/$(NAME) ]; then cp .libs/$(NAME) .; fi
+
+install: $(NAME)
+	$(APXS) -i -a $(NAME)
 
 test:
 	@echo "Checking Apache loaded modules..."
