@@ -117,4 +117,5 @@ URL -> http://192.168.56.100/
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0
 Host: 192.168.56.100
+Authorization: secret
 ```
