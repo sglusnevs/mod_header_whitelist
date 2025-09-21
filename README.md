@@ -29,21 +29,25 @@ LoadModule header_whitelist_module /usr/lib64/httpd/modules/mod_header_whitelist
 
 This module supports these parameters:
 
-#### HeaderWhitelist
+#### HeadersClientWhitelist
 
-Space-separated list of Headers that are whitelisted (case-insensitive)
+Space-separated list of client headers that are whitelisted (case-insensitive).
+
+Can be set in global or in virtual host context.
 
 Example:
 
-HeaderWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
+HeadersClientWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
 
-#### SensitiveHeaders
+#### HeadersClientSensitive
 
-Space-separated list of Headers whose values should not be logged into server's logfiles.
+Space-separated list of client headers whose values should not be logged into server's logfiles.
+
+Can be set in global or in virtual host context.
 
 Example: 
 
-SensitiveHeaders Cookie Set-Cookie Authorization
+HeadersClientSensitive Cookie Set-Cookie Authorization
 
 
 ### Testing
@@ -52,9 +56,9 @@ Virtual host definition I used for testing (assuming 192.168.56.100 is the host-
 for your VMs).
 
 ```httpd.conf
-HeaderWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
+HeadersClientWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
 
-SensitiveHeaders Cookie Set-Cookie Authorization
+HeadersClientSensitive Cookie Set-Cookie Authorization
 
 # IP-based virtual host for tests (no ServerName needed)
 <VirtualHost 192.168.56.100:80>
@@ -66,7 +70,7 @@ SensitiveHeaders Cookie Set-Cookie Authorization
 </VirtualHost>
 ```
 
-The /var/www/html/iptest directory micht contain simple index.html file:
+The /var/www/html/iptest directory might contain simple index.html file:
 
 ```
 $ cat /var/www/html/iptest/index.html

@@ -42,16 +42,16 @@ static const char *set_sensitive(cmd_parms *cmd, void *dummy, const char *arg) {
 
 /* Apache directive table */
 static const command_rec whitelist_cmds[] = {
-    AP_INIT_ITERATE("HeaderWhitelist",
+    AP_INIT_ITERATE("HeadersClientWhitelist",
                     set_whitelist,
                     NULL,
                     RSRC_CONF,
-                    "List of headers to allow through (case-insensitive)"),
-    AP_INIT_ITERATE("SensitiveHeaders",
+                    "List of client headers to allow through (case-insensitive)"),
+    AP_INIT_ITERATE("HeadersClientSensitive",
                     set_sensitive,
                     NULL,
                     RSRC_CONF,
-                    "List of headers to hide in logs"),
+                    "List of client headers to hide in logs (from HeadersClientWhitelist)"),
     {NULL}
 };
 
