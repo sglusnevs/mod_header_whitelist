@@ -36,8 +36,9 @@ Space-separated list of client headers that are whitelisted (case-insensitive).
 Can be set in global or in virtual host context.
 
 Example:
-
+```
 HeadersClientWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
+```
 
 #### HeadersClientSensitive
 
@@ -46,9 +47,9 @@ Space-separated list of client headers whose values should not be logged into se
 Can be set in global or in virtual host context.
 
 Example: 
-
+```
 HeadersClientSensitive Cookie Set-Cookie Authorization
-
+```
 
 ### Testing
 
