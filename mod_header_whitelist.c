@@ -51,7 +51,7 @@ static const command_rec whitelist_cmds[] = {
                     set_sensitive,
                     NULL,
                     RSRC_CONF,
-                    "List of client headers to hide in logs (from HeadersClientWhitelist)"),
+                    "List of client headers whose values should be hidden from logs"),
     {NULL}
 };
 
