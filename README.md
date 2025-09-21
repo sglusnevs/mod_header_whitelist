@@ -85,11 +85,11 @@ $ sudo tail -f /var/log/httpd/iptest_error.log
 
 Logs:
 ```
-[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(100): [client XXXX ] whitelist: allowed header: Host: 192.168.56.122
-[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(100): [client XXXX ] whitelist: allowed header: Accept: */*
-[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(104): [client XXXX ] whitelist: stripped header: X-Test: bad
-[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(100): [client XXXX ] whitelist: allowed header: User-Agent: myagent
-[:debug] [pid 12967:tid 13098] mod_header_whitelist.c(100): [client XXXX ] whitelist: allowed header: Authorization: <hidden>
+[:debug] ... [client XXXX ] whitelist: allowed header: Host: 192.168.56.122
+[:debug] ... [client XXXX ] whitelist: allowed header: Accept: */*
+[:debug] ... [client XXXX ] whitelist: stripped header: X-Test: bad
+[:debug] ... [client XXXX ] whitelist: allowed header: User-Agent: myagent
+[:debug] ... [client XXXX ] whitelist: allowed header: Authorization: <hidden>
 ```
 
 To make sure headers are really stripped off, I use php to show actual headers:
