@@ -35,7 +35,7 @@ sudo systemctl restart httpd
 
 This module supports the following parameters:
 
-** HeadersClientWhitelist **
+**HeadersClientWhitelist**
 
 Space-separated list of client headers that are whitelisted (case-insensitive).
 
@@ -46,7 +46,7 @@ Example:
 HeadersClientWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
 ```
 
-** HeadersClientSensitive **
+**HeadersClientSensitive**
 
 It is possible for debugging purposes to log out every HTTP header, it's value and decision
 to allow/strip it out. However, some headers might contain sensitive information that should
