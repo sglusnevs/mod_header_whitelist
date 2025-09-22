@@ -39,7 +39,7 @@ This module supports the following parameters:
 
 Space-separated list of client headers that are whitelisted (case-insensitive).
 
-Can be set in global or in virtual host context.
+Can be set in both global or virtual host context.
 
 Example:
 ```
@@ -50,12 +50,12 @@ HeadersClientWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
 
 It is possible for debugging purposes to log out every HTTP header, it's value and decision
 to allow/strip it out. However, some headers might contain sensitive information that should
-better not to be logged. 
+better not be logged. 
 
-With this parameter one can define list of of space-separated sensitive headers whose values 
-will never be logged into log files (case-insensitive).
+This parameter defines a list of space-separated headers (case-insensitive) whose values will 
+not be saved into log files.
 
-The parameter can be set in global or in virtual host context.
+The parameter can be set in both global or virtual host context.
 
 Example: 
 ```
