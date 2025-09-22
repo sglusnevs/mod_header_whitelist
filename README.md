@@ -13,13 +13,13 @@ $ make
 
 ### Installing
 
-The makefile provided adds module to your httpd.conf automatically:
+Use makefile provided to add module to your httpd.conf:
 
 ```
 sudo make install
 ```
 
-It will create httpd.conf record and activate it:
+It will create module record in the httpd.conf as follows:
 
 ```
 LoadModule headers_whitelist_module /usr/lib64/httpd/modules/mod_headers_whitelist.so
@@ -33,9 +33,9 @@ sudo systemctl restart httpd
 
 ### Configuration 
 
-This module supports the following parameters.
+This module supports the following parameters:
 
-#### HeadersClientWhitelist
+- HeadersClientWhitelist
 
 Space-separated list of client headers that are whitelisted (case-insensitive).
 
@@ -46,7 +46,7 @@ Example:
 HeadersClientWhitelist Host User-Agent Accept Cookie Set-Cookie Authorization
 ```
 
-#### HeadersClientSensitive
+- HeadersClientSensitive
 
 It is possible for debugging purposes to log out every HTTP header, it's value and decision
 to allow/strip it out. However, some headers might contain sensitive information that should
