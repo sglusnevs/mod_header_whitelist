@@ -5,6 +5,9 @@
 #include "http_log.h"
 #include "apr_strings.h"
 
+/* replace values of headers defined as sensitive while logging to disk */
+#define VALUE_LOGGED_SENSITIVE_PLACEHOLDER "<hidden>"
+
 /* Forward declaration of module */
 module AP_MODULE_DECLARE_DATA headers_whitelist_module;
 
@@ -67,7 +70,7 @@ static int is_in_array(apr_array_header_t *arr, const char *name) {
     return 0;
 }
 
-/* Hook: strip disallowed headers, log placeholders for sensitive headers */
+/* Hook: strip disallowed headers, log value_loggeds for sensitive headers */
 static int whitelist_fixups(request_rec *r) {
     /* Skip subrequests */
     if (r->main) return DECLINED;
@@ -83,27 +86,27 @@ static int whitelist_fixups(request_rec *r) {
     apr_table_entry_t *elts = (apr_table_entry_t *)arr->elts;
     apr_table_t *new_headers = apr_table_make(r->pool, arr->nelts);
 
-    char *placeholder;
+    char *value_logged;
 
     for (int i = 0; i < arr->nelts; i++) {
         if (!elts[i].key) continue;
 
-        /* Determine placeholder */
+        /* Prevent sensitive values from being logged */
 	    if (is_in_array(cfg->sensitive, elts[i].key)) {
-		    placeholder = "<hidden>";
+		    value_logged = VALUE_LOGGED_SENSITIVE_PLACEHOLDER;
 	    } else {
-		    placeholder = elts[i].val;
+		    value_logged = elts[i].val;
 	    }
 
         if (is_in_array(cfg->whitelist, elts[i].key)) {
             apr_table_add(new_headers, elts[i].key, elts[i].val);
             ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r,
                           "whitelist: allowed header: %s: %s",
-                          elts[i].key, placeholder);
+                          elts[i].key, value_logged);
         } else {
             ap_log_rerror(APLOG_MARK, APLOG_DEBUG, 0, r,
                           "whitelist: stripped header: %s: %s",
-                          elts[i].key, placeholder);
+                          elts[i].key, value_logged);
         }
     }
 
